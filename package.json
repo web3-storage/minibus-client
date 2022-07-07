@@ -26,5 +26,22 @@
     "ava": "^4.3.0",
     "standard": "^17.0.0",
     "uint8arrays": "^3.0.0"
-  }
+  },
+  "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/web3-storage/minibus-client.git"
+  },
+  "keywords": [
+    "minibus",
+    "block",
+    "storage",
+    "cid",
+    "ipld",
+    "ipfs"
+  ],
+  "bugs": {
+    "url": "https://github.com/web3-storage/minibus-client/issues"
+  },
+  "homepage": "https://github.com/web3-storage/minibus-client#readme"
 }
