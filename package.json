@@ -1,6 +1,6 @@
 {
   "name": "@web3-storage/minibus",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Minibus API client and CLI tool.",
   "main": "index.js",
   "type": "module",
