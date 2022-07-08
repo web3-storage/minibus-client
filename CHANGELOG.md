@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/web3-storage/minibus-client/compare/v1.1.0...v1.1.1) (2022-07-08)
+
+
+### Bug Fixes
+
+* set npm registry url ([2e347dc](https://github.com/web3-storage/minibus-client/commit/2e347dc03b1e995706328ca4a1c5d1738a98f839))
+
 ## [1.1.0](https://github.com/web3-storage/minibus-client/compare/v1.0.0...v1.1.0) (2022-07-08)
 
 
