@@ -32,7 +32,11 @@ export class Minibus {
       method: 'HEAD',
       headers: this.headers
     })
-    return res.ok
+    if (res.status === 404) return false
+    if (!res.ok) {
+      throw new Error(`failed to determine existence of ${cid}: server responded with status: ${res.status}`)
+    }
+    return true
   }
 
   /**
