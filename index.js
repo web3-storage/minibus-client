@@ -27,8 +27,12 @@ export class Minibus {
 
   /** @param {import('multiformats').CID} cid */
   async has (cid) {
-    // https://github.com/web3-storage/minibus/issues/7
-    return Boolean(await this.get(cid))
+    const url = new URL(base58btc.encode(cid.multihash.bytes), this.endpoint)
+    const res = await this.fetch(url, {
+      method: 'HEAD',
+      headers: this.headers
+    })
+    return res.ok
   }
 
   /**
