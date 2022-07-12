@@ -10,9 +10,11 @@ import { CID } from 'multiformats/cid'
 import { CarIndexedReader } from '@ipld/car'
 import numeral from 'numeral'
 import fetch from '@web-std/fetch'
+import Queue from 'p-queue'
 import { Minibus } from './index.js'
 
 const ENDPOINT = 'https://minibus.web3.storage'
+const BLOCK_PUT_CONCURRENCY = 10
 
 const pkg = JSON.parse(fs.readFileSync(new URL('./package.json', import.meta.url)))
 
@@ -88,12 +90,16 @@ cli.command('put-car <path>')
     for await (const _ of carReader.cids()) { // eslint-disable-line no-unused-vars
       totalBlocks++
     }
+    const queue = new Queue({ concurrency: BLOCK_PUT_CONCURRENCY })
     let blockCount = 0
     for await (const block of carReader.blocks()) {
-      blockCount++
-      spinner.text = `Storing block (${numeral(blockCount).format('0,0')}/${numeral(totalBlocks).format('0,0')})`
-      await client.put(block.cid, block.bytes)
+      const blockNum = blockCount++
+      queue.add(async () => {
+        spinner.text = `Storing block (${numeral(blockNum).format('0,0')}/${numeral(totalBlocks).format('0,0')}) ${block.cid}`
+        await client.put(block.cid, block.bytes)
+      })
     }
+    await queue.onEmpty()
     spinner.stopAndPersist({ symbol: '🚌', text: `Stored ${numeral(totalBlocks).format('0,0')} blocks` })
   })
 
